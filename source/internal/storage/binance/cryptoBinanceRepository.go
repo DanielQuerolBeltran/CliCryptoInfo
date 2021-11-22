@@ -30,7 +30,7 @@ type repository struct {
 	url string
 }
 
-func NewRepository() cli.CryptoRespoInteraface {
+func NewRepository() cli.CryptoRepoInterface {
 	return &repository{url: url}
 }
 

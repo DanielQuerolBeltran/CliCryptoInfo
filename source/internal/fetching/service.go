@@ -11,10 +11,10 @@ type Service interface {
 }
 
 type service struct {
-	bR cli.CryptoRespoInteraface
+	bR cli.CryptoRepoInterface
 }
 
-func NewService(r cli.CryptoRespoInteraface) Service {
+func NewService(r cli.CryptoRepoInterface) Service {
 	return &service{r}
 }
 
