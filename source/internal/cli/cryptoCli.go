@@ -12,6 +12,7 @@ import (
 type CobraFn func(cmd *cobra.Command, args []string)
 
 const idFlag = "id"
+const idsFlag = "ids"
 
 // InitBeersCmd initialize beers command
 func InitCmd(service app.Service) *cobra.Command {
@@ -21,7 +22,8 @@ func InitCmd(service app.Service) *cobra.Command {
 		Run:   runFn(service),
 	}
 
-	beersCmd.Flags().StringP(idFlag, "i", "", "Symbol of the crypto")
+	 beersCmd.Flags().StringP(idFlag, "i", "", "Symbol of the crypto")
+	beersCmd.Flags().StringArrayP(idsFlag, "s", []string{"BTCUSDT", "BUSDTRY"}, "Symbols list of the cryptos")
 
 	return beersCmd
 }
@@ -37,6 +39,18 @@ func runFn(service app.Service) CobraFn {
 			}
 			crypto.Print()
 			return
+		}
+
+		ids, _ := cmd.Flags().GetStringArray(idsFlag)
+		if len(ids) > 0 {
+			ids := append(cmd.Flags().Args(), ids[0])
+			for _, id := range ids {
+				crypto, err := service.GetCryptoById(string(id))
+				if err != nil {
+					log.Fatal(err)
+				}
+				crypto.Print()
+			}
 		}
 
 		cryptos, err := service.GetAllCryptos()

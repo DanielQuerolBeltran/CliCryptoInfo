@@ -1,6 +1,5 @@
 package binance
 
-
 import (
 	"encoding/json"
 	"fmt"
@@ -34,10 +33,15 @@ func NewRepository() cli.CryptoRepoInterface {
 	return &repository{url: url}
 }
 
+var cryptoMap = make(map[string]cli.Crypto)
+
 func (c *repository) GetAll() (map[string]cli.Crypto, error) {
+	if len(cryptoMap) > 0 {
+		return cryptoMap, nil
+	}
+
 	var jsonElements []jsonElement
 	contents, err := getData()
-	cryptoMap := make(map[string]cli.Crypto)
 
 	if err != nil {
 		return nil, err

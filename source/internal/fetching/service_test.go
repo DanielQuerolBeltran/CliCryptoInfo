@@ -15,7 +15,7 @@ const INVALID_SYMBOL = "ABCD"
 
 func getCryptoMapFixtures() (map[string]cryptocli.Crypto) {
 	return  map[string]cryptocli.Crypto{
-		VALID_SYMBOL: cryptocli.Crypto{
+		VALID_SYMBOL: {
 			Symbol: VALID_SYMBOL,
 			LastPrice: 1.01,
 			HighPrice: 1.001,
